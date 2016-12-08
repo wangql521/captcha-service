@@ -11,8 +11,8 @@
 
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-		<project.spring.version>4.2.6.RELEASE</project.spring.version>
-		<project.spring.data.version>1.7.2.RELEASE</project.spring.data.version>
+		<project.spring.version>4.3.1.RELEASE</project.spring.version>
+		<project.spring.data.version>1.7.3.RELEASE</project.spring.data.version>
 		<project.jdk.version>1.7</project.jdk.version>
 	</properties>
 	<dependencies>
@@ -42,12 +42,12 @@
 		<dependency>
 			<groupId>org.slf4j</groupId>
 			<artifactId>slf4j-log4j12</artifactId>
-			<version>1.7.21</version>
+			<version>1.7.20</version>
 		</dependency>
 		<dependency>
 			<groupId>redis.clients</groupId>
 			<artifactId>jedis</artifactId>
-			<version>2.9.0</version>
+			<version>2.8.2</version>
 		</dependency>
 		<dependency>
 			<groupId>org.springframework.data</groupId>
@@ -73,6 +73,17 @@
 			<groupId>com.fasterxml.jackson.core</groupId>
 			<artifactId>jackson-databind</artifactId>
 			<version>2.5.2</version>
+		</dependency>
+		<dependency>
+			<groupId>aspectj</groupId>
+			<artifactId>aspectjrt</artifactId>
+			<version>1.5.3</version>
+		</dependency>
+		<dependency>
+			<groupId>aspectj</groupId>
+			<artifactId>aspectjweaver</artifactId>
+			<version>1.5.3</version>
+			<scope>test</scope>
 		</dependency>
 	</dependencies>
 	<build>
