@@ -33,4 +33,11 @@
 		<property name="producer" ref="captchaProducer" />
 		<property name="redisTemplate" ref="redisTmpl" />
 	</bean>
+	<bean id="lockService" class="net.csdn.blog.chaijunkun.captcha.service.impl.LockServiceImpl">
+		<property name="redisT" ref="redisT" />
+		<property name="redisUtil" ref="redisUtil" />
+	</bean>
+	<bean id="redisUtil" class="net.csdn.blog.chaijunkun.captcha.util.RedisUtil">
+		<property name="redisT" ref="redisT" />
+	</bean>
 </beans>

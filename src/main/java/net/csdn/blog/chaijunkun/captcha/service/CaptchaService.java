@@ -82,5 +82,6 @@ public interface CaptchaService {
 	 * @return
 	 */
 	public BufferedImage getCaptchaImg(String captcha);
-	
+
+
 }

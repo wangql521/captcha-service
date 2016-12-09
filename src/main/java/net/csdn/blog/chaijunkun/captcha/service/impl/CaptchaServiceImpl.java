@@ -1,13 +1,20 @@
 package net.csdn.blog.chaijunkun.captcha.service.impl;
 
 import java.awt.image.BufferedImage;
+import java.util.Date;
 import java.util.Random;
 import java.util.concurrent.TimeUnit;
 
+import com.spring.tools.DateUtil;
 import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataAccessException;
+import org.springframework.data.redis.connection.RedisConnection;
+import org.springframework.data.redis.core.RedisCallback;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.core.StringRedisTemplate;
+import org.springframework.data.redis.core.TimeoutUtils;
 import org.springframework.stereotype.Service;
 
 import com.google.code.kaptcha.Producer;
@@ -15,6 +22,8 @@ import com.google.code.kaptcha.Producer;
 import net.csdn.blog.chaijunkun.captcha.params.CaptchaVerifyParam;
 import net.csdn.blog.chaijunkun.captcha.service.CaptchaService;
 import net.csdn.blog.chaijunkun.captcha.util.XXTEAUtil;
+
+import javax.annotation.Resource;
 
 @Service
 public class CaptchaServiceImpl implements CaptchaService {
@@ -24,7 +33,6 @@ public class CaptchaServiceImpl implements CaptchaService {
 	private static final String[] codeBase= {"0","1","2","3","4","5","6","7","8","9","A","B","C","D","E","F","G","H","I","J","K","L","M","N","O","P","Q","R","S","T","U","V","W","X","Y","Z","a","b","c","d","e","f","g","h","i","j","k","l","m","n","o","p","q","r","s","t","u","v","w","x","y","z"};
 
 	private static Random rand= new Random();
-	
 	/** XXTEA加密解密的密钥 */
 	private String secKey = "captcha";
 	
@@ -44,7 +52,7 @@ public class CaptchaServiceImpl implements CaptchaService {
 	/** 缓存操作模板 */
 	@Autowired
 	private StringRedisTemplate redisTemplate;
-	
+
 	public CaptchaServiceImpl(){
 		logger.info("正在构建验证码生成与验证服务");
 	}
@@ -195,6 +203,7 @@ public class CaptchaServiceImpl implements CaptchaService {
 		}
 		//判断缓存中有没有此token
 		//如果有说明已经被验证过了
+
 		if (redisTemplate.hasKey(this.genVerifiedTokenCacheKey(param.getToken()))){
 			throw new Exception("该验证码已经被验证过");
 		}else{
